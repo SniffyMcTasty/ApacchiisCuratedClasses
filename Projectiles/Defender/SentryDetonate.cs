@@ -11,27 +11,27 @@ namespace ApacchiisCuratedClasses.Projectiles.Defender
 	{
 		public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.SentryShot[projectile.type] = true;
+			ProjectileID.Sets.SentryShot[Projectile.type] = true;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 384;
-			projectile.height = 384;
-            projectile.alpha = 255;
-			projectile.friendly = true;
-			projectile.hide = true;
-			projectile.penetrate = -1;
-			projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-			projectile.timeLeft = 3;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = -1;
+			Projectile.width = 384;
+			Projectile.height = 384;
+            Projectile.alpha = 255;
+			Projectile.friendly = true;
+			Projectile.hide = true;
+			Projectile.penetrate = -1;
+			Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+			Projectile.timeLeft = 3;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.immune[projectile.owner] = 2;
+			target.immune[Projectile.owner] = 2;
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -41,7 +41,7 @@ namespace ApacchiisCuratedClasses.Projectiles.Defender
 			else if (target.type == NPCID.EaterofWorldsHead || target.type == NPCID.EaterofWorldsBody || target.type == NPCID.EaterofWorldsTail)
 				damage /= 5;
 
-			if (target.position.X < projectile.position.X + projectile.width * 5)
+			if (target.position.X < Projectile.position.X + Projectile.width * 5)
 				hitDirection = -1;
 			else
 				hitDirection = 1;
@@ -49,57 +49,57 @@ namespace ApacchiisCuratedClasses.Projectiles.Defender
 		}
 
 		//Thanks to Verveine for this method
-		public static void resetIFrames(Projectile projectile)
+		public static void resetIFrames(Projectile Projectile)
 		{
 			for (int l = 0; l < Main.npc.Length; l++)
 			{  
 				NPC target = Main.npc[l];
-				if (projectile.Hitbox.Intersects(target.Hitbox)) 
+				if (Projectile.Hitbox.Intersects(target.Hitbox)) 
 				{
-					target.immune[projectile.owner] = 2;
+					target.immune[Projectile.owner] = 2;
 				}
 			}
 		}
 
 		public override void AI()
 		{
-			if (projectile.ai[0] == 0)
+			if (Projectile.ai[0] == 0)
 			{
-				resetIFrames(projectile);
-				Main.PlaySound(SoundID.Item15, projectile.position);
+				resetIFrames(Projectile);
+				Main.PlaySound(SoundID.Item15, Projectile.position);
 				//Smoke Dust spawn
 				for (int i = 0; i < 25; i++)
 				{
-					int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
+					int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				//Fire Dust spawn
 				for (int i = 0; i < 40; i++)
 				{
-					int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
+					int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
 					Main.dust[dustIndex].noGravity = true;
 					Main.dust[dustIndex].velocity *= 5f;
-					dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+					dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex].velocity *= 3f;
 				}
 				//Large Smoke Gore spawn
-				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				int goreIndex = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				goreIndex = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				goreIndex = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				goreIndex = Gore.NewGore(new Vector2(Projectile.position.X + (float)(Projectile.width / 2) - 24f, Projectile.position.Y + (float)(Projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
-				projectile.ai[0] = 1;
+				Projectile.ai[0] = 1;
 			}
 		}
 	}

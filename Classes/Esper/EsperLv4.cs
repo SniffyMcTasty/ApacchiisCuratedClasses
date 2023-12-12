@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace ApacchiisCuratedClasses.Classes.Esper
 {
-	public class EsperLv4 : ModItem
+	public class EsperLv4 : BaseClass
 	{
         Player player = Main.player[Main.myPlayer];
         Mod EsperClassMod = ModLoader.GetMod("EsperClass");
@@ -32,11 +32,11 @@ namespace ApacchiisCuratedClasses.Classes.Esper
 
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 30;
-			item.accessory = true;
-			item.value = 0;
-			item.rare = 4;
+			Item.width = 30;
+			Item.height = 30;
+			Item.accessory = true;
+			Item.value = 0;
+			Item.rare = 4;
         }
 
 		public override void AddRecipes()
@@ -57,7 +57,7 @@ namespace ApacchiisCuratedClasses.Classes.Esper
                 accPlayer.hasEsper = true;
 
                 //Reflection for cross-mod compatability without hard references
-                ModPlayer ECPlayer = player.GetModPlayer(EsperClassMod, "ECPlayer");
+                ModPlayer ECPlayer = player.GetModPlayer<>(EsperClassMod);
                 Type ECPlayerType = ECPlayer.GetType();
 
                 // Telekinetic Damage
@@ -75,20 +75,6 @@ namespace ApacchiisCuratedClasses.Classes.Esper
                 float oldtkVel = (float)tkVel.GetValue(ECPlayer);
                 tkVel.SetValue(ECPlayer, oldtkVel + 0.4f);
             }
-        }
-
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            if (player.GetModPlayer<ApacchiisClassesMod.MyPlayer>().hasEquippedClass == true)
-                return false;
-
-            return base.CanEquipAccessory(player, slot);
-        }
-
-        public override bool ReforgePrice(ref int reforgePrice, ref bool canApplyDiscount)
-        {
-            reforgePrice = 150000;
-            return base.ReforgePrice(ref reforgePrice, ref canApplyDiscount);
         }
     }
 }

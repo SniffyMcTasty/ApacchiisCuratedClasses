@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace ApacchiisCuratedClasses.Classes.Defender
 {
-	public class DefenderUltimate : ModItem
+	public class DefenderUltimate : BaseClass
 	{
         Player player = Main.player[Main.myPlayer];
         Mod ExpSentriesMod = ModLoader.GetMod("ExpandedSentries");
@@ -38,11 +38,11 @@ namespace ApacchiisCuratedClasses.Classes.Defender
 
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 30;
-			item.accessory = true;
-			item.value = 0;
-			item.rare = 9;
+			Item.width = 30;
+			Item.height = 30;
+			Item.accessory = true;
+			Item.value = 0;
+			Item.rare = 9;
         }
 
 		public override void AddRecipes()
@@ -64,7 +64,7 @@ namespace ApacchiisCuratedClasses.Classes.Defender
                 accPlayer.hasClassPath1 = true;
 
                 //Reflection for cross-mod compatability without hard references
-                ModPlayer esPlayer = player.GetModPlayer(ExpSentriesMod, "ESPlayer");
+                ModPlayer esPlayer = player.GetModPlayer<>(ExpSentriesMod);
                 Type esPlayerType = esPlayer.GetType();
 
                 // Sentry Damage
@@ -86,20 +86,6 @@ namespace ApacchiisCuratedClasses.Classes.Defender
                 accPlayer.defenderAbility1Damage = 10000;
                 player.GetModPlayer<ApacchiisClassesMod.MyPlayer>().abilityDamage += 0.2f;
             }
-        }
-
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            if (player.GetModPlayer<ApacchiisClassesMod.MyPlayer>().hasEquippedClass == true)
-                return false;
-
-            return base.CanEquipAccessory(player, slot);
-        }
-
-        public override bool ReforgePrice(ref int reforgePrice, ref bool canApplyDiscount)
-        {
-            reforgePrice = 150000;
-            return base.ReforgePrice(ref reforgePrice, ref canApplyDiscount);
         }
     }
 }

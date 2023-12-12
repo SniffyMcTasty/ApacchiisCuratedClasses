@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace ApacchiisCuratedClasses.Classes.Explorer
 {
-	public class ExplorerLv5 : ModItem
+	public class ExplorerLv5 : BaseClass
 	{
         Player player = Main.player[Main.myPlayer];
 
@@ -24,11 +24,11 @@ namespace ApacchiisCuratedClasses.Classes.Explorer
 
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 30;
-			item.accessory = true;
-			item.value = 0;
-			item.rare = 5;
+			Item.width = 30;
+			Item.height = 30;
+			Item.accessory = true;
+			Item.value = 0;
+			Item.rare = 5;
         }
 
 		public override void AddRecipes()
@@ -56,21 +56,6 @@ namespace ApacchiisCuratedClasses.Classes.Explorer
             player.pickSpeed += .125f;
             player.statDefense += 5;
             player.nightVision = true;
-        }
-
-        // Necessary so players cant equip multiple classes at the same time
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            if (player.GetModPlayer<ApacchiisClassesMod.MyPlayer>().hasEquippedClass == true)
-                return false;
-
-            return base.CanEquipAccessory(player, slot);
-        }
-
-        public override bool ReforgePrice(ref int reforgePrice, ref bool canApplyDiscount)
-        {
-            reforgePrice = 150000; // 15/3 = 5 Gold
-            return base.ReforgePrice(ref reforgePrice, ref canApplyDiscount);
         }
     }
 }

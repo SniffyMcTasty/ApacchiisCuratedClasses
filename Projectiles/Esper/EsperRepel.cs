@@ -14,14 +14,14 @@ namespace ApacchiisCuratedClasses.Projectiles.Esper
 		SoundEffectInstance repelSound;
 		public override void SetDefaults()
 		{
-			projectile.width = 256;
-			projectile.height = 256;
-            projectile.alpha = 255;
-			projectile.friendly = true;
-			projectile.hide = true;
-			projectile.penetrate = -1;
-			projectile.ignoreWater = true;
-            projectile.tileCollide = false;
+			Projectile.width = 256;
+			Projectile.height = 256;
+            Projectile.alpha = 255;
+			Projectile.friendly = true;
+			Projectile.hide = true;
+			Projectile.penetrate = -1;
+			Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
 		}
 
 		public override bool? CanCutTiles()
@@ -45,28 +45,28 @@ namespace ApacchiisCuratedClasses.Projectiles.Esper
 
 		public override void AI()
 		{
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
             var acmPlayer = player.GetModPlayer<ApacchiisClassesMod.MyPlayer>();
             var accPlayer = player.GetModPlayer<ACCPlayer>();
-			if (!player.active || player.dead || projectile.hostile)
+			if (!player.active || player.dead || Projectile.hostile)
 			{
-				projectile.Kill();
+				Projectile.Kill();
 				return;
 			}
-			if ((loopSound == null || loopSound.State != SoundState.Playing) && projectile.ai[0] >= 15)
+			if ((loopSound == null || loopSound.State != SoundState.Playing) && Projectile.ai[0] >= 15)
 			{
 				loopSound = Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Esper/EsperRepelLoop"));
 			}
-			if (projectile.ai[0] <= 0)
-				projectile.ai[0] = 1;
-			projectile.velocity = Vector2.Zero;
-			float fieldSize = (projectile.ai[0] / 15) * 256 * acmPlayer.abilityDamage;
-			projectile.width = (int)fieldSize;
-			projectile.height = (int)fieldSize;
-			projectile.Center = player.Center;
+			if (Projectile.ai[0] <= 0)
+				Projectile.ai[0] = 1;
+			Projectile.velocity = Vector2.Zero;
+			float fieldSize = (Projectile.ai[0] / 15) * 256 * acmPlayer.abilityDamage;
+			Projectile.width = (int)fieldSize;
+			Projectile.height = (int)fieldSize;
+			Projectile.Center = player.Center;
 			for (int i = 0; i < 60; i++)
 			{
-				Vector2 dustPos = projectile.Center + Vector2.UnitX.RotatedBy(MathHelper.ToRadians(360f / 60 * i)) * ((projectile.width + projectile.height) / 4);
+				Vector2 dustPos = Projectile.Center + Vector2.UnitX.RotatedBy(MathHelper.ToRadians(360f / 60 * i)) * ((Projectile.width + Projectile.height) / 4);
 				int dustIndex = Dust.NewDust(dustPos, 1, 1, 86, 0, 0, 150, default(Color), 0.7f);
 				Main.dust[dustIndex].noGravity = true;
 				Main.dust[dustIndex].velocity = Vector2.Zero;
@@ -75,7 +75,7 @@ namespace ApacchiisCuratedClasses.Projectiles.Esper
 			{
 				NPC target = Main.npc[l];
 				float distanceCheck = (fieldSize / 2);
-				if (Vector2.Distance(target.Center, projectile.Center) <= distanceCheck)
+				if (Vector2.Distance(target.Center, Projectile.Center) <= distanceCheck)
 				{
 					if (repelSound == null || repelSound.State != SoundState.Playing)
 						repelSound = Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Esper/EsperRepelHit"));
@@ -85,21 +85,21 @@ namespace ApacchiisCuratedClasses.Projectiles.Esper
 					}
 					if (target.knockBackResist > 0f && !target.townNPC)
 					{
-						if (target.Center.X < projectile.Center.X && target.velocity.X > -projectile.knockBack)
+						if (target.Center.X < Projectile.Center.X && target.velocity.X > -Projectile.knockBack)
 						{
-							target.velocity.X = -projectile.knockBack * target.knockBackResist;
+							target.velocity.X = -Projectile.knockBack * target.knockBackResist;
 						}
-						else if (target.velocity.X < projectile.knockBack)
+						else if (target.velocity.X < Projectile.knockBack)
 						{
-							target.velocity.X = projectile.knockBack * target.knockBackResist;
+							target.velocity.X = Projectile.knockBack * target.knockBackResist;
 						}
-						if (target.Center.Y < projectile.Center.Y && target.velocity.Y > -projectile.knockBack)
+						if (target.Center.Y < Projectile.Center.Y && target.velocity.Y > -Projectile.knockBack)
 						{
-							target.velocity.Y = -projectile.knockBack * target.knockBackResist;
+							target.velocity.Y = -Projectile.knockBack * target.knockBackResist;
 						}
-						else if (target.velocity.Y < projectile.knockBack)
+						else if (target.velocity.Y < Projectile.knockBack)
 						{
-							target.velocity.Y = projectile.knockBack * target.knockBackResist;
+							target.velocity.Y = Projectile.knockBack * target.knockBackResist;
 						}
 					}
 				}
@@ -111,11 +111,11 @@ namespace ApacchiisCuratedClasses.Projectiles.Esper
 					damageBlock = 30 + (int)(player.statDefense * 0.5f);
 				else
 					damageBlock = 60 + (int)(player.statDefense * 0.75f);
-				for (int j = 0; j < Main.projectile.Length; j++)
+				for (int j = 0; j < Main.Projectile.Length; j++)
 				{
-					Projectile proj = Main.projectile[j];
+					Projectile proj = Main.Projectile[j];
 					float distanceCheck2 = (fieldSize / 2);
-					if (Vector2.Distance(proj.Center, projectile.Center) <= distanceCheck2)
+					if (Vector2.Distance(proj.Center, Projectile.Center) <= distanceCheck2)
 					{
 						if (proj.hostile && !proj.friendly && proj.damage > 0 && proj.damage <= damageBlock)
 						{
@@ -126,11 +126,11 @@ namespace ApacchiisCuratedClasses.Projectiles.Esper
 					}
 				}
 			}
-			if (projectile.ai[0] < 15)
+			if (Projectile.ai[0] < 15)
 			{
-				projectile.ai[0]++;
-				if (projectile.ai[0] == 15)
-					projectile.knockBack *= 0.25f;
+				Projectile.ai[0]++;
+				if (Projectile.ai[0] == 15)
+					Projectile.knockBack *= 0.25f;
 			}
 		}
 	}

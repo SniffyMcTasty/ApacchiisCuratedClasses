@@ -10,7 +10,7 @@ namespace ApacchiisCuratedClasses
         {
             var accPlayer = player.GetModPlayer<ACCPlayer>();
         
-            if (accPlayer.spellbladeToggle && item.melee)
+            if (accPlayer.spellbladeToggle && !item.noMelee)
             {
                 Vector2 vel = Main.MouseWorld - player.position;
                 vel.Normalize();

@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace ApacchiisCuratedClasses.Classes.Spellblade
 {
-	public class SpellbladeUltimate : ModItem
+	public class SpellbladeUltimate : BaseClass
 	{
         public override void SetStaticDefaults()
         {
@@ -30,11 +30,11 @@ namespace ApacchiisCuratedClasses.Classes.Spellblade
 
 		public override void SetDefaults()
 		{
-			item.width = 30;
-			item.height = 30;
-			item.accessory = true;
-			item.value = 0;
-			item.rare = 9;
+			Item.width = 30;
+			Item.height = 30;
+			Item.accessory = true;
+			Item.value = 0;
+			Item.rare = 9;
         }
 
 		public override void AddRecipes()
@@ -70,20 +70,6 @@ namespace ApacchiisCuratedClasses.Classes.Spellblade
             accPlayer.shokkZoneTimerBase = 35;
             accPlayer.magicBladeBaseDamage = 50;
             accPlayer.magicBladeBaseCost = 28;
-        }
-
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            if (player.GetModPlayer<ApacchiisClassesMod.MyPlayer>().hasEquippedClass == true)
-                return false;
-
-            return base.CanEquipAccessory(player, slot);
-        }
-
-        public override bool ReforgePrice(ref int reforgePrice, ref bool canApplyDiscount)
-        {
-            reforgePrice = 150000;
-            return base.ReforgePrice(ref reforgePrice, ref canApplyDiscount);
         }
     }
 }
